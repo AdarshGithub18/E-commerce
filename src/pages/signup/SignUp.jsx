@@ -2,9 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import Layout from '../../components/layout/Layout';
 import img from '../../assets/login.png';
-import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
-import { auth } from '../../firebaseAuth/FirebaseAuth';
-import toast from 'react-hot-toast';
 
 const SignUp = () => {
   const [user, setUser] = useState({
@@ -64,26 +61,7 @@ const SignUp = () => {
         'Your password should contain atleast one of these symbols @ # $ % & !';
     }
 
-    // If no errors, proceed with Firebase authentication
-    if (Object.keys(errors).length === 0) {
-      createUserWithEmailAndPassword(auth, user.email, user.password)
-        .then(async (res) => {
-          const fireBaseUser = res.user;
-          toast.success('accounted created successfully');
-
-          await updateProfile(fireBaseUser, {
-            displayName: user.userName,
-          });
-          setUser('');
-          navigate('/login');
-        })
-        .catch((err) => {
-          toast.error(err.message);
-          setValidation('');
-        });
-    } else {
-      setValidation(errors);
-    }
+    setValidation(errors);
   };
 
   return (

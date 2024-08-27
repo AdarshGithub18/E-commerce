@@ -3,9 +3,6 @@ import Layout from '../../components/layout/Layout';
 import img from '../../assets/login.png';
 
 import { NavLink, useNavigate } from 'react-router-dom';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../../firebaseAuth/FirebaseAuth';
-import toast from 'react-hot-toast';
 
 const Login = () => {
   const [user, setUser] = useState({
@@ -57,20 +54,7 @@ const Login = () => {
         'Your password should contain atleast one of these symbols @ # $ % & !';
     }
 
-    // If no errors, proceed with Firebase authentication
-    if (Object.keys(errors).length === 0) {
-      signInWithEmailAndPassword(auth, user.email, user.password)
-        .then((res) => {
-          toast.success('Login Successfull');
-          navigateHome('/');
-        })
-        .catch((err) => {
-          toast.error(err.message);
-          setValidation('');
-        });
-    } else {
-      setValidation(errors);
-    }
+    setValidation(errors);
   };
 
   return (

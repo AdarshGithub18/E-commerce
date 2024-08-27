@@ -7,6 +7,8 @@ import SignUp from './pages/signup/SignUp';
 import AllProducts from './pages/all-products/AllProducts';
 import toast, { Toaster } from 'react-hot-toast';
 import SingleProduct from './pages/single-product/SingleProduct';
+import ContactUs from './pages/contact/ContactUs';
+import AboutUs from './pages/about/AboutUs';
 
 const App = () => {
   const [cart, setCart] = useState([]);
@@ -116,6 +118,8 @@ const App = () => {
             path="single-product/:productID"
             element={<SingleProduct addToCart={addToCart} />}
           />
+          <Route path="contact-us" element={<ContactUs />} />
+          <Route path="about-us" element={<AboutUs />} />
         </Routes>
       </BrowserRouter>
       <Toaster />
