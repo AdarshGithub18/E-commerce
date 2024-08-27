@@ -1,48 +1,48 @@
 import React from 'react';
-import icon1 from '../../assets/basketball.png';
-import icon2 from '../../assets/book-stack.png';
-import icon3 from '../../assets/smartphone.png';
-import icon4 from '../../assets/toy.png';
-import icon5 from '../../assets/tshirt.png';
-import icon6 from '../../assets/wrist-watch.png';
+import icon1 from '../../assets/basketball.webp';
+import icon2 from '../../assets/book-stack.webp';
+import icon3 from '../../assets/smartphone.webp';
+import icon4 from '../../assets/toy.webp';
+import icon5 from '../../assets/shirt.webp';
+import icon6 from '../../assets/wrist-watch.webp';
 import { NavLink } from 'react-router-dom';
 
 const TopCategories = () => {
   const categories = [
-    { titile: 'Sports', icons: icon1 },
-    { titile: 'Books', icons: icon2 },
-    { titile: 'Electronics', icons: icon3 },
-    { titile: 'Toys', icons: icon4 },
-    { titile: 'fashion', icons: icon5 },
-    { titile: 'Watches', icons: icon6 },
+    { title: 'Sports', icons: icon1 },
+    { title: 'Books', icons: icon2 },
+    { title: 'Electronics', icons: icon3 },
+    { title: 'Toys', icons: icon4 },
+    { title: 'Fashion', icons: icon5 },
+    { title: 'Watches', icons: icon6 },
   ];
+
   return (
     <>
-      <div className="heading mx-5">
-        <h1 className="fsm:text-3xl text-2xl font-medium title-font text-gray-900">
+      <div className="heading m-5">
+        <h1 className="sm:text-3xl text-2xl font-medium title-font text-gray-900">
           Our Top Categories
         </h1>
       </div>
 
-      <div className="mx-5 flex flex-col justify-between items-center gap-3">
-        <div className="Categories flex flex-wrap md:flex-row md:gap-20 justify-center w-full ">
-          {categories.map((category) => {
+      <div className="mx-5 flex flex-col justify-center items-center gap-3">
+        <div className="Categories flex flex-wrap justify-center w-full gap-4 md:gap-20">
+          {categories.map((category, index) => {
             return (
-              <>
-                <NavLink className=" flex flex-col ">
-                  <div className="border border-gray-700 rounded-full p-5 ">
-                    <img
-                      src={category.icons}
-                      width={50}
-                      alt=""
-                      className="object-center overflow-hidden "
-                    />
-                  </div>
-                  <div className="flex gap-8 text-center">
-                    <p>{category.titile}</p>
-                  </div>
-                </NavLink>
-              </>
+              <NavLink
+                key={index}
+                className="flex flex-col items-center text-center"
+              >
+                <div className="border border-gray-700 rounded-full p-5  md:p-5">
+                  <img
+                    src={category.icons}
+                    width={40}
+                    alt={category.title}
+                    className="object-center object-cover overflow-hidden"
+                  />
+                </div>
+                <p className="mt-2">{category.title}</p>
+              </NavLink>
             );
           })}
         </div>

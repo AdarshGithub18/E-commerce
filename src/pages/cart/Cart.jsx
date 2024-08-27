@@ -1,16 +1,30 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Layout from '../../components/layout/Layout';
 import { MdOutlineDelete } from 'react-icons/md';
+import { useNavigate } from 'react-router-dom';
+import { BiRightArrow, BiSolidLeftArrow } from 'react-icons/bi';
 
 const Cart = ({
   cart,
   handleIncQuantity,
   handleDecQuantity,
   handleRemoveItem,
+  handleTotalCost,
+  handleDiscount,
+  promoCode,
+  setPromoCode,
+  invalidPromo,
 }) => {
+  //changing the page title
+  useEffect(() => {
+    document.title = 'Cart | UrbanCart';
+  }, []);
+
+  const navigateProduct = useNavigate();
+
   return (
     <Layout>
-      <section className="w-[90%] mx-auto relative z-0 after:contents-[''] after:absolute after:z-0 my-4 after:h-full xl:after:w-1/3 after:top-0 after:right-0 ">
+      <section className="w-[90% ] mx-auto relative z-0 after:contents-[''] after:absolute after:z-0 my-4 after:h-full xl:after:w-1/3 after:top-0 after:right-0 ">
         <div className="w-full max-w-7xl px-4 md:px-5 lg:px-6 mx-auto relative z-10">
           <div className="grid grid-cols-12">
             <div className="col-span-12 xl:col-span-8 lg:pr-8 pt-14 pb-8 lg:py-24 w-full max-xl:max-w-3xl max-xl:mx-auto">
@@ -31,8 +45,8 @@ const Cart = ({
                 </div>
                 <div className="col-span-12 md:col-span-5">
                   <div className="grid grid-cols-5">
-                    <div class="col-span-3">
-                      <p class="font-normal text-lg leading-8 text-gray-400 text-center">
+                    <div className="col-span-3">
+                      <p className="font-normal text-lg leading-8 text-gray-400 text-center">
                         Quantity
                       </p>
                     </div>
@@ -118,6 +132,12 @@ const Cart = ({
                   </div>
                 );
               })}
+              <button
+                onClick={() => navigateProduct('/all-product')}
+                className="mt-5 flex"
+              >
+                Continue Shopping
+              </button>
             </div>
 
             {/* order summary section */}
@@ -133,7 +153,7 @@ const Cart = ({
                   </p>
                   <p className="font-medium text-lg leading-8 text-black">{}</p>
                 </div>
-                <form>
+                <form onSubmit={(e) => e.preventDefault()}>
                   <label className="flex items-center mb-1.5 text-gray-600 text-sm font-medium">
                     Shipping
                   </label>
@@ -161,16 +181,31 @@ const Cart = ({
                         type="text"
                         className="block w-full h-11 pr-11 pl-5 py-2.5 text-base font-normal shadow-xs text-gray-900 bg-white border border-gray-300 rounded-lg placeholder-gray-500 focus:outline-gray-400"
                         placeholder="xxxx xxxx xxxx"
+                        value={promoCode}
+                        onChange={(e) => setPromoCode(e.target.value)}
                       />
+
+                      <p className="text-red-600  my-1">{invalidPromo}</p>
+
+                      <button
+                        onClick={handleDiscount}
+                        className="btn-primary font-semibold my-1 w-full bg-black text-white rounded-md py-1"
+                      >
+                        Apply Promo Code
+                      </button>
+                      <p className="my-2">
+                        Use <span className="font-bold">DISCOUNT20</span> to get
+                        20% discount
+                      </p>
                     </div>
                   </div>
                 </form>
-                <div className="flex items-center justify-between pt-4 border-t border-gray-200">
+                <div className="flex items-center justify-between pt-1 border-t border-gray-200">
                   <p className="font-normal text-lg leading-8 text-black">
                     Total Price
                   </p>
                   <p className="font-bold text-lg leading-8 text-black">
-                    $485.00
+                    ${Math.floor(handleTotalCost())}
                   </p>
                 </div>
                 <div className="w-full pt-5">

@@ -11,15 +11,15 @@ const Footer = () => {
       <footer className="border border-t-gray-200 text-black">
         <div className="footer-content px-5 py-5 ">
           <div className="w-64 md:text-left mb-3 ">
-            <NavLink to={'/'} className="font-bold text-2xl">
-              UrbanCart{' '}
+            <NavLink to={'/'} className="font-bold text-xl md:text-2xl">
+              UrbanCart
             </NavLink>
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 md:text-center  ">
             <div>
               <h3
-                className="font-medium text-lg tracking-widest mb-3
+                className="font-medium md:text-lg tracking-widest mb-3
                 "
               >
                 MENU
@@ -33,7 +33,7 @@ const Footer = () => {
             </div>{' '}
             <div>
               <h3
-                className="font-medium text-lg tracking-widest mb-3
+                className="font-medium text-sm md:text-lg tracking-widest mb-3
                 "
               >
                 COMPANY
@@ -47,7 +47,7 @@ const Footer = () => {
             </div>{' '}
             <div>
               <h3
-                className="font-medium text-lg tracking-widest mb-3
+                className="font-medium text-sm md:text-lg tracking-widest mb-3
                 "
               >
                 CONTACT
@@ -61,7 +61,7 @@ const Footer = () => {
             </div>{' '}
             <div>
               <h3
-                className="font-medium text-lg tracking-widest mb-3
+                className="font-medium text-sm md:text-lg  tracking-widest mb-3
                 "
               >
                 TECH SUPPORT

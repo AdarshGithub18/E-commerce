@@ -1,16 +1,81 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Layout from '../../components/layout/Layout';
 import img from '../../assets/login.png';
-import banner from '../../assets/login-banner.png';
-import { NavLink } from 'react-router-dom';
+
+import { NavLink, useNavigate } from 'react-router-dom';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../../firebaseAuth/FirebaseAuth';
+import toast from 'react-hot-toast';
 
 const Login = () => {
+  const [user, setUser] = useState({
+    email: '',
+    password: '',
+  });
+
+  const [validation, setValidation] = useState({});
+
+  // changing the page titile
+  useEffect(() => {
+    document.title = 'Login | UrbanCart';
+  }, []);
+  // navigation
+
+  const navigateHome = useNavigate();
+
+  const handleInput = (e) => {
+    setUser({ ...user, [e.target.name]: e.target.value });
+  };
+
+  const errors = {};
+
+  const handleSubmit = () => {
+    // validation for email
+    if (!user.email) {
+      errors.email = 'Please enter email';
+    } else if (!user.email.includes('@')) {
+      errors.email = 'You are missing @';
+    } else if (user.email.indexOf('@') == 0) {
+      errors.email = "Invalid positioning of '@' ";
+    } else if (
+      user.email.charAt(user.email.length - 4) != '.' &&
+      user.email.charAt(user.email.length - 3) != '.'
+    ) {
+      errors.email = "Invalid positioning of '.' ";
+    }
+
+    // validation for password
+
+    if (!user.password) {
+      errors.password = 'Enter password';
+    } else if (user.password.length < 8 || user.password.length >= 15) {
+      errors.password = 'password length must be between 8 to 15';
+    } else if (
+      !user.password.includes('@' || '$' || '%' || '#' || '!' || '&')
+    ) {
+      errors.password =
+        'Your password should contain atleast one of these symbols @ # $ % & !';
+    }
+
+    // If no errors, proceed with Firebase authentication
+    if (Object.keys(errors).length === 0) {
+      signInWithEmailAndPassword(auth, user.email, user.password)
+        .then((res) => {
+          toast.success('Login Successfull');
+          navigateHome('/');
+        })
+        .catch((err) => {
+          toast.error(err.message);
+          setValidation('');
+        });
+    } else {
+      setValidation(errors);
+    }
+  };
+
   return (
     <Layout>
       <section className="flex flex-col  ">
-        <div className="m-5 w-fit">
-          <img src={banner} className="rounded-xl w-full h-[50%] " alt="" />
-        </div>
         <div className=" flex my-5 flex-col items-center justify-center  px-4">
           <div className="grid md:grid-cols-2 items-center gap-4 max-w-6xl w-full">
             <div className="border border-gray-300 rounded-lg p-6 max-w-md shadow-[0_2px_22px_-4px_rgba(93,96,127,0.2)] max-md:mx-auto">
@@ -28,59 +93,44 @@ const Login = () => {
                   <label className="text-gray-800 text-sm mb-2 block">
                     Email
                   </label>
-                  <div className=" flex items-center">
+                  <div className=" flex flex-col">
                     <input
-                      name="username"
-                      type="email"
-                      required
+                      name="email"
+                      type="text"
+                      autoComplete="off"
+                      onChange={handleInput}
+                      value={user.email}
                       className="w-full text-sm text-gray-800 border border-gray-300 px-4 py-3 rounded-lg outline-black"
-                      placeholder="Enter user name"
+                      placeholder="Enter your email"
                     />
+                    <p className="text-red-500 text-sm">
+                      {validation ? validation.email : ''}
+                    </p>
                   </div>
                 </div>
                 <div>
                   <label className="text-gray-800 text-sm mb-2 block">
                     Password
                   </label>
-                  <div className=" flex items-center">
+                  <div className=" flex flex-col">
                     <input
                       name="password"
                       type="password"
-                      required
+                      onChange={handleInput}
+                      value={user.password}
+                      autoComplete="off"
                       className="w-full text-sm text-gray-800 border border-gray-300 px-4 py-3 rounded-lg outline-black"
                       placeholder="Enter password"
                     />
-                  </div>
-                </div>
-
-                <div className="flex flex-wrap items-center justify-between gap-4">
-                  <div className="flex items-center">
-                    <input
-                      id="remember-me"
-                      name="remember-me"
-                      type="checkbox"
-                      className="h-4 w-4 shrink-0 text-black  border-gray-300 rounded"
-                    />
-                    <label
-                      htmlFor="remember-me"
-                      className="ml-3 block text-sm text-gray-800"
-                    >
-                      Remember me
-                    </label>
-                  </div>
-
-                  <div className="text-sm">
-                    <a
-                      href="jajvascript:void(0);"
-                      className="text-black hover:underline font-semibold"
-                    >
-                      Forgot your password?
-                    </a>
+                    <p className="text-red-500 text-sm">
+                      {validation ? validation.password : ''}
+                    </p>
                   </div>
                 </div>
 
                 <div className="!mt-8">
                   <button
+                    onClick={handleSubmit}
                     type="button"
                     className="w-full shadow-xl py-3 px-4 text-sm tracking-wide rounded-lg text-white bg-black hover:bg-gray-700 focus:outline-none"
                   >

@@ -1,5 +1,6 @@
 import React from 'react';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
+import { NavLink } from 'react-router-dom';
 
 const ProductCard = ({ product }) => {
   return (
@@ -8,11 +9,12 @@ const ProductCard = ({ product }) => {
         {product.map((item) => {
           return (
             <>
-              <div
+              <NavLink
+                to={`/single-product/${item.id}`}
                 key={item.id}
                 className="relative  mx-auto  flex w-[180px]  h-[280px] md:w-full md:h-full flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md "
               >
-                <a
+                <div
                   className="relative mx-3 mt-3  h-60 overflow-hidden  rounded-xl"
                   href="#"
                 >
@@ -22,13 +24,12 @@ const ProductCard = ({ product }) => {
                     alt="product image"
                     loading="lazy"
                   />
-                </a>
+                </div>
                 <div className="mt-4 px-5 pb-5">
-                  <a href="#">
-                    <h5 className="text-base md:text-xl tracking-tight text-slate-900">
-                      {item.title}
-                    </h5>
-                  </a>
+                  <h5 className="text-base md:text-xl tracking-tight text-slate-900">
+                    {item.title}
+                  </h5>
+
                   <div className="mt-2 mb-5 flex items-center justify-between">
                     <p>
                       <span className="text-xl md:text-3xl font-bold text-slate-900">
@@ -49,7 +50,7 @@ const ProductCard = ({ product }) => {
                     Add to cart
                   </button>
                 </div>
-              </div>
+              </NavLink>
             </>
           );
         })}

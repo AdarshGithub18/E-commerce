@@ -9,8 +9,8 @@ const Navbar = () => {
   const navLinks = [
     { title: 'Home', path: '/' },
     { title: 'All Products', path: '/all-product' },
-    { title: 'Kids', path: 'kids' },
-    { title: 'Mens', path: 'mens' },
+    { title: 'About Us', path: '/about-us' },
+    { title: 'Contact Us', path: '/contact-us' },
   ];
 
   const [toggleMenu, setToggleMenu] = useState(false);
@@ -29,7 +29,7 @@ const Navbar = () => {
           </div>
           {/* nav links */}
 
-          <ul className="hidden md:flex gap-5 justify-center ">
+          <ul className="hidden md:flex gap-9 justify-center ">
             {navLinks.map((link, id) => {
               return (
                 <>

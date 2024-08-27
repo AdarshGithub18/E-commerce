@@ -1,20 +1,98 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
 import Layout from '../../components/layout/Layout';
 import img from '../../assets/login.png';
-import banner from '../../assets/login-banner.png';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { auth } from '../../firebaseAuth/FirebaseAuth';
+import toast from 'react-hot-toast';
 
 const SignUp = () => {
+  const [user, setUser] = useState({
+    userName: '',
+    email: '',
+    password: '',
+  });
+
+  const [validation, setValidation] = useState({});
+
+  //changing the page title
+  useEffect(() => {
+    document.title = 'SignUp | UrbanCart';
+  }, []);
+
+  // navigation
+
+  const navigate = useNavigate();
+
+  const handleInput = (e) => {
+    setUser({ ...user, [e.target.name]: e.target.value });
+  };
+
+  const errors = {};
+
+  const handleSubmit = () => {
+    // validation for username
+    if (!user.userName) {
+      errors.userName = 'Please enter username';
+    } else if (user.userName.length < 2) {
+      errors.userName = "Username can't be only 1 character ";
+    }
+
+    // validation for email
+    if (!user.email) {
+      errors.email = 'Please enter email';
+    } else if (!user.email.includes('@')) {
+      errors.email = 'You are missing @';
+    } else if (user.email.indexOf('@') == 0) {
+      errors.email = "Invalid positioning of '@' ";
+    } else if (
+      user.email.charAt(user.email.length - 4) != '.' &&
+      user.email.charAt(user.email.length - 3) != '.'
+    ) {
+      errors.email = "Invalid positioning of '.' ";
+    }
+
+    // validation for password
+    if (!user.password) {
+      errors.password = 'Enter password';
+    } else if (user.password.length < 8 || user.password.length >= 15) {
+      errors.password = 'password length must be between 8 to 15';
+    } else if (
+      !user.password.includes('@' || '$' || '%' || '#' || '!' || '&')
+    ) {
+      errors.password =
+        'Your password should contain atleast one of these symbols @ # $ % & !';
+    }
+
+    // If no errors, proceed with Firebase authentication
+    if (Object.keys(errors).length === 0) {
+      createUserWithEmailAndPassword(auth, user.email, user.password)
+        .then(async (res) => {
+          const fireBaseUser = res.user;
+          toast.success('accounted created successfully');
+
+          await updateProfile(fireBaseUser, {
+            displayName: user.userName,
+          });
+          setUser('');
+          navigate('/login');
+        })
+        .catch((err) => {
+          toast.error(err.message);
+          setValidation('');
+        });
+    } else {
+      setValidation(errors);
+    }
+  };
+
   return (
     <Layout>
       <section className="flex flex-col  ">
-        <div className="m-5 w-fit">
-          <img src={banner} className="rounded-xl w-full h-[50%] " alt="" />
-        </div>
         <div className=" flex my-5 flex-col items-center justify-center  px-4">
           <div className="grid md:grid-cols-2 items-center gap-4 max-w-6xl w-full">
             <div className="border border-gray-300 rounded-lg p-6 max-w-md shadow-[0_2px_22px_-4px_rgba(93,96,127,0.2)] max-md:mx-auto">
-              <form className="space-y-4">
+              <form onSubmit={(e) => e.preventDefault()} className="space-y-4">
                 <div className="mb-8">
                   <h3 className="text-gray-800 text-3xl font-extrabold">
                     Sign Up
@@ -28,47 +106,62 @@ const SignUp = () => {
                   <label className="text-gray-800 text-sm mb-2 block">
                     Name
                   </label>
-                  <div className=" flex items-center">
+                  <div className=" flex flex-col">
                     <input
-                      name="username"
-                      type="text"
-                      required
+                      name="userName"
+                      autoComplete="off"
+                      onChange={handleInput}
+                      value={user.userName}
                       className="w-full text-sm text-gray-800 border border-gray-300 px-4 py-3 rounded-lg outline-black"
                       placeholder="Enter your name"
                     />
+                    <p className="text-red-500 text-sm">
+                      {validation ? validation.userName : ''}
+                    </p>
                   </div>
                 </div>{' '}
                 <div>
                   <label className="text-gray-800 text-sm mb-2 block">
                     Email
                   </label>
-                  <div className=" flex items-center">
+                  <div className=" flex flex-col">
                     <input
                       name="email"
-                      type="email"
-                      required
+                      type="text"
+                      autoComplete="off"
+                      onChange={handleInput}
+                      value={user.email}
                       className="w-full text-sm text-gray-800 border border-gray-300 px-4 py-3 rounded-lg outline-black"
                       placeholder="Enter your email"
                     />
+                    <p className="text-red-500 text-sm">
+                      {validation ? validation.email : ''}
+                    </p>
                   </div>
                 </div>
                 <div>
                   <label className="text-gray-800 text-sm mb-2 block">
                     Password
                   </label>
-                  <div className=" flex items-center">
+                  <div className=" flex flex-col">
                     <input
                       name="password"
                       type="password"
-                      required
+                      onChange={handleInput}
+                      value={user.password}
+                      autoComplete="off"
                       className="w-full text-sm text-gray-800 border border-gray-300 px-4 py-3 rounded-lg outline-black"
                       placeholder="Enter password"
                     />
+                    <p className="text-red-500 text-sm">
+                      {validation ? validation.password : ''}
+                    </p>
                   </div>
                 </div>
                 <div className="!mt-8">
                   <button
-                    type="button"
+                    onClick={handleSubmit}
+                    type="submit"
                     className="w-full shadow-xl py-3 px-4 text-sm tracking-wide rounded-lg text-white bg-black hover:bg-gray-700 focus:outline-none"
                   >
                     Sign Up
