@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import Layout from '../../components/layout/Layout';
 import Hero from '../../components/hero-section/Hero';
 import TopCategories from '../../components/top-categories/TopCategories';
 import Service from '../../components/services/Service';
@@ -13,12 +12,12 @@ const Home = () => {
 
   return (
     <>
-      <Layout>
+      <section>
         <Hero />
         <TopCategories />
         <Gallery />
         <Service />
-      </Layout>
+      </section>
     </>
   );
 };

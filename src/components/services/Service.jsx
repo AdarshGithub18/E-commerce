@@ -1,8 +1,8 @@
 import React from 'react';
-import s1 from '../../assets/service-icons/shipped.png';
-import s2 from '../../assets/service-icons/authenticity.png';
-import s3 from '../../assets/service-icons/exchange.png';
-import s4 from '../../assets/service-icons/credit-card.png';
+import s1 from '../../assets/service-icons/shipped.webp';
+import s2 from '../../assets/service-icons/authenticity.webp';
+import s3 from '../../assets/service-icons/exchange.webp';
+import s4 from '../../assets/service-icons/credit-card.webp';
 
 const Service = () => {
   const services = [

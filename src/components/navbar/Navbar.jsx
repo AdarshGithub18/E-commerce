@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { FiShoppingCart } from 'react-icons/fi';
 import { HiMiniBars3CenterLeft } from 'react-icons/hi2';
 import { LuUserCircle2 } from 'react-icons/lu';
 import { RiCloseLargeFill } from 'react-icons/ri';
 import { NavLink } from 'react-router-dom';
+import { CartContext } from '../../contexts/CartContext';
+import { BsCart } from 'react-icons/bs';
 
 const Navbar = () => {
   const navLinks = [
@@ -14,6 +16,7 @@ const Navbar = () => {
   ];
 
   const [toggleMenu, setToggleMenu] = useState(false);
+  const { cart } = useContext(CartContext);
 
   const handleMenu = () => {
     setToggleMenu(!toggleMenu);
@@ -52,8 +55,20 @@ const Navbar = () => {
             </NavLink>
 
             <button>
-              <NavLink to={'/cart'} className="text-2xl">
-                <FiShoppingCart />
+              <NavLink
+                to={'/cart'}
+                className="text-2xl relative flex items-center gap-2"
+              >
+                {cart.length >= 1 ? (
+                  <span className="bg-black text-white absolute right-14 -top-2 px-2 py-1 rounded-full text-xs flex justify-center items-center w-6 h-6">
+                    {cart.length}
+                  </span>
+                ) : (
+                  ''
+                )}
+
+                <BsCart />
+                <span className="text-lg">Cart</span>
               </NavLink>
             </button>
 
@@ -82,6 +97,7 @@ const Navbar = () => {
                 return (
                   <>
                     <NavLink
+                      onClick={handleMenu}
                       className={'font-semibold'}
                       key={id}
                       to={link.path}
