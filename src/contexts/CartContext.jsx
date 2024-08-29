@@ -8,6 +8,7 @@ export const CartContextProvider = ({ children }) => {
   const [promoCode, setPromoCode] = useState('');
   const [discount, setDiscount] = useState(0);
   const [invalidPromo, setInvalidPromo] = useState('');
+  const [isOpen, setIsOpen] = useState(false);
 
   // increasing the quantity of product
   const handleIncQuantity = (id) => {
@@ -76,6 +77,12 @@ export const CartContextProvider = ({ children }) => {
     }
   };
 
+  // modal for checkout
+
+  const modalFunc = () => {
+    setIsOpen(!isOpen);
+  };
+
   const allValues = {
     cart,
     setCart,
@@ -91,6 +98,8 @@ export const CartContextProvider = ({ children }) => {
     handleRemoveItem,
     handleTotalCost,
     addToCart,
+    modalFunc,
+    isOpen,
   };
 
   return (

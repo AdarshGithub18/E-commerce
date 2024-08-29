@@ -9,15 +9,8 @@ export const ProductProvider = ({ children }) => {
 
   const [selectedCategory, setSelectedCategory] = useState('');
   const [showCategoryProduct, setShowCategoryProduct] = useState(false);
-  const [searchProduct, setSearchProduct] = useState('');
-
-  const [countPage, setCountPage] = useState(1);
 
   //changing the page title
-
-  useEffect(() => {
-    document.title = 'All Products | UrbanCart';
-  }, []);
 
   // Fetching all categories data for dropdown
   const categoriesAPI = 'https://dummyjson.com/products/categories';
@@ -38,16 +31,7 @@ export const ProductProvider = ({ children }) => {
 
   // all products data it will give 30 products for the all-products page
 
-  // pagination
-
-  const handlePage = (event, value) => {
-    setCountPage(value);
-  };
-  const productsPerPage = 10; // Define the number of products per page
-
-  const getAllProductAPI = `https://dummyjson.com/products?limit=${productsPerPage}&skip=${
-    (countPage - 1) * productsPerPage
-  }`;
+  const getAllProductAPI = `https://dummyjson.com/products?limit=0`;
   const getAllProduct = async () => {
     try {
       const res = await axios.get(getAllProductAPI);
@@ -58,7 +42,7 @@ export const ProductProvider = ({ children }) => {
 
   useEffect(() => {
     getAllProduct();
-  }, [countPage]);
+  }, []);
 
   // filtering product according to selected category
 
@@ -87,19 +71,6 @@ export const ProductProvider = ({ children }) => {
 
   // handle search
 
-  const handleSearch = (e) => {
-    const query = e.target.value;
-    setSearchProduct(query);
-
-    const searchItem = allProduct.filter((item) => {
-      return item.title.toLowerCase().includes(searchProduct.toLowerCase());
-    });
-
-    setAllProduct(searchItem);
-
-    console.log(query);
-  };
-
   const allValues = {
     categories,
     setCategories,
@@ -111,12 +82,7 @@ export const ProductProvider = ({ children }) => {
     setSelectedCategory,
     showCategoryProduct,
     setShowCategoryProduct,
-    searchProduct,
-    setSearchProduct,
     handleFilter,
-    handleSearch,
-    handlePage,
-    countPage,
   };
 
   return (

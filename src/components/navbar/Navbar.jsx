@@ -10,7 +10,7 @@ import { BsCart } from 'react-icons/bs';
 const Navbar = () => {
   const navLinks = [
     { title: 'Home', path: '/' },
-    { title: 'All Products', path: '/all-product' },
+    { title: 'All Products', path: '/all-products' },
     { title: 'About Us', path: '/about-us' },
     { title: 'Contact Us', path: '/contact-us' },
   ];
@@ -60,7 +60,7 @@ const Navbar = () => {
                 className="text-2xl relative flex items-center gap-2"
               >
                 {cart.length >= 1 ? (
-                  <span className="bg-black text-white absolute right-14 -top-2 px-2 py-1 rounded-full text-xs flex justify-center items-center w-6 h-6">
+                  <span className="bg-black text-white absolute right-14 -top-2 px-2 py-1 rounded-full text-xs flex justify-center items-center w-4 h-4">
                     {cart.length}
                   </span>
                 ) : (

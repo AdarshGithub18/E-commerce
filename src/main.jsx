@@ -11,11 +11,13 @@ import AllProducts from './pages/all-products/AllProducts.jsx';
 import SingleProduct from './pages/single-product/SingleProduct.jsx';
 import ContactUs from './pages/contact/ContactUs.jsx';
 import AboutUs from './pages/about/AboutUs.jsx';
+import ErrorPage from './pages/error/ErrorPage.jsx';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: '/',
@@ -34,7 +36,7 @@ const router = createBrowserRouter([
         element: <SignUp />,
       },
       {
-        path: '/all-product',
+        path: '/all-products',
         element: <AllProducts />,
       },
       {

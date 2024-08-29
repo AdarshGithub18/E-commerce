@@ -1,32 +1,31 @@
 import React, { useContext, useEffect } from 'react';
-
 import { MdOutlineDelete } from 'react-icons/md';
-import { useNavigate } from 'react-router-dom';
-import { BiRightArrow, BiSolidLeftArrow } from 'react-icons/bi';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { CartContext } from '../../contexts/CartContext';
 import { FaArrowLeftLong } from 'react-icons/fa6';
+import EmptyCart from '../../components/cart/EmptyCart';
+import CheckoutModal from '../../components/cart/CheckoutModal';
 
 const Cart = () => {
   const {
     cart,
-
     promoCode,
     setPromoCode,
-
     invalidPromo,
-
     handleDecQuantity,
     handleIncQuantity,
+    modalFunc,
     handleDiscount,
     handleTotalCost,
     handleRemoveItem,
+    isOpen,
   } = useContext(CartContext);
   //changing the page title
   useEffect(() => {
     document.title = 'Shopping Cart | UrbanCart';
   }, []);
 
-  const navigateProduct = useNavigate();
+  const navigate = useNavigate();
 
   return (
     <section className="w-[90% ] mx-auto relative z-0 after:contents-[''] after:absolute after:z-0 my-4 after:h-full xl:after:w-1/3 after:top-0 after:right-0 ">
@@ -65,80 +64,85 @@ const Cart = () => {
             </div>
 
             {/* Cart Items */}
-            {cart.map((product) => {
-              return (
-                <div
-                  key={product.id}
-                  className="flex flex-col min-[500px]:md:flex-row min-[500px]:items-center gap-5 py-6 border-b border-gray-200 group"
-                >
-                  <div className="w-full md:max-w-[126px]">
-                    <img
-                      src={product.thumbnail}
-                      alt="Product image"
-                      className="mx-auto rounded-xl"
-                    />
-                  </div>
 
-                  <div className="grid relative grid-cols-1 md:grid-cols-4 w-full">
-                    <div className="md:col-span-2">
-                      <div className="flex flex-col items-center md:items-start gap-3">
-                        <h6 className="font-semibold text-base leading-7 text-black">
-                          {product.title}
-                        </h6>
-
-                        <h6 className="font-normal text-base leading-7 text-gray-500">
-                          brand: {product.brand}
-                        </h6>
-                        <h6 className="font-normal text-base leading-7 text-gray-500">
-                          {product.category}
-                        </h6>
-                        <h6 className="font-medium text-base leading-7  text-gray-600 transition-all duration-300 group-hover:text-indigo-600">
-                          ${product.price}
-                        </h6>
-                      </div>
+            {cart.length === 0 ? (
+              <EmptyCart />
+            ) : (
+              cart.map((product) => {
+                return (
+                  <div
+                    key={product.id}
+                    className="flex flex-col min-[500px]:md:flex-row min-[500px]:items-center gap-5 py-6 border-b border-gray-200 group"
+                  >
+                    <div className="w-full md:max-w-[126px]">
+                      <img
+                        src={product.thumbnail}
+                        alt="Product image"
+                        className="mx-auto rounded-xl"
+                      />
                     </div>
 
-                    <div className="flex items-center max-[500px]: justify-center md:justify-start h-full max-md:mt-3">
-                      <div className="flex items-center h-full">
+                    <div className="grid relative grid-cols-1 md:grid-cols-4 w-full">
+                      <div className="md:col-span-2">
+                        <div className="flex flex-col items-center md:items-start gap-3">
+                          <h6 className="font-semibold text-base leading-7 text-black">
+                            {product.title}
+                          </h6>
+
+                          <h6 className="font-normal text-base leading-7 text-gray-500">
+                            brand: {product.brand}
+                          </h6>
+                          <h6 className="font-normal text-base leading-7 text-gray-500">
+                            {product.category}
+                          </h6>
+                          <h6 className="font-medium text-base leading-7  text-gray-600 transition-all duration-300 group-hover:text-indigo-600">
+                            ${product.price}
+                          </h6>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center max-[500px]: justify-center md:justify-start h-full max-md:mt-3">
+                        <div className="flex items-center h-full">
+                          <button
+                            onClick={() => handleDecQuantity(product.id)}
+                            className="group rounded-l-xl px-5 py-[18px] border border-gray-200 flex items-center justify-center shadow-sm shadow-transparent transition-all duration-500 hover:bg-gray-50 hover:border-gray-300 hover:shadow-gray-300 focus-within:outline-gray-300"
+                          >
+                            -
+                          </button>
+                          <p className="border-y border-gray-200 outline-none text-gray-900 font-semibold text-lg w-full max-w-[73px] min-w-[60px] placeholder:text-gray-900 py-[15px] text-center bg-transparent">
+                            {product.quantity}
+                          </p>
+                          <button
+                            onClick={() => handleIncQuantity(product.id)}
+                            className="group rounded-r-xl px-5 py-[18px] border border-gray-200 flex items-center justify-center shadow-sm shadow-transparent transition-all duration-500 hover:bg-gray-50 hover:border-gray-300 hover:shadow-gray-300 focus-within:outline-gray-300"
+                          >
+                            +
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* Remove item Button */}
+                      <div className="absolute right-1 ">
                         <button
-                          onClick={() => handleDecQuantity(product.id)}
-                          className="group rounded-l-xl px-5 py-[18px] border border-gray-200 flex items-center justify-center shadow-sm shadow-transparent transition-all duration-500 hover:bg-gray-50 hover:border-gray-300 hover:shadow-gray-300 focus-within:outline-gray-300"
+                          onClick={() => handleRemoveItem(product.id)}
+                          className="text-red-500 text-2xl hover:text-red-700 font-semibold"
                         >
-                          -
+                          <MdOutlineDelete />
                         </button>
-                        <p className="border-y border-gray-200 outline-none text-gray-900 font-semibold text-lg w-full max-w-[73px] min-w-[60px] placeholder:text-gray-900 py-[15px] text-center bg-transparent">
-                          {product.quantity}
+                      </div>
+
+                      <div className="flex items-center justify-center md:justify-end md:mr-10  max-md:mt-3 h-full">
+                        <p className="font-bold text-lg leading-8 text-gray-600 text-center transition-all duration-300 group-hover:text-gray-600">
+                          ${Math.floor(product.price * product.quantity)}
                         </p>
-                        <button
-                          onClick={() => handleIncQuantity(product.id)}
-                          className="group rounded-r-xl px-5 py-[18px] border border-gray-200 flex items-center justify-center shadow-sm shadow-transparent transition-all duration-500 hover:bg-gray-50 hover:border-gray-300 hover:shadow-gray-300 focus-within:outline-gray-300"
-                        >
-                          +
-                        </button>
                       </div>
                     </div>
-
-                    {/* Remove item Button */}
-                    <div className="absolute right-1 ">
-                      <button
-                        onClick={() => handleRemoveItem(product.id)}
-                        className="text-red-500 text-2xl hover:text-red-700 font-semibold"
-                      >
-                        <MdOutlineDelete />
-                      </button>
-                    </div>
-
-                    <div className="flex items-center justify-center md:justify-end md:mr-10  max-md:mt-3 h-full">
-                      <p className="font-bold text-lg leading-8 text-gray-600 text-center transition-all duration-300 group-hover:text-gray-600">
-                        ${Math.floor(product.price * product.quantity)}
-                      </p>
-                    </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })
+            )}
             <button
-              onClick={() => navigateProduct('/all-product')}
+              onClick={() => navigate('/all-products')}
               className="mt-5 flex gap-2 items-center"
             >
               <span>
@@ -162,23 +166,6 @@ const Cart = () => {
                 <p className="font-medium text-lg leading-8 text-black">{}</p>
               </div>
               <form onSubmit={(e) => e.preventDefault()}>
-                <label className="flex items-center mb-1.5 text-gray-600 text-sm font-medium">
-                  Shipping
-                </label>
-                <div className="flex pb-6">
-                  <div className="relative w-full">
-                    <div className="absolute left-0 top-0 py-3 px-4">
-                      <span className="font-normal text-base text-gray-300">
-                        Second Delivery
-                      </span>
-                    </div>
-                    <input
-                      type="text"
-                      className="block w-full h-11 pr-10 pl-36 min-[500px]:pl-52 py-2.5 text-base font-normal shadow-xs text-gray-900 bg-white border border-gray-300 rounded-lg placeholder-gray-400 focus:outline-gray-400"
-                      placeholder="$5.00"
-                    />
-                  </div>
-                </div>
                 <label className="flex items-center mb-1.5 text-gray-400 text-sm font-medium">
                   Promo Code
                 </label>
@@ -213,16 +200,21 @@ const Cart = () => {
                   Total Price
                 </p>
                 <p className="font-bold text-lg leading-8 text-black">
-                  ${Math.floor(handleTotalCost())}
+                  ${cart.length == 0 ? 0 : Math.floor(handleTotalCost())}
                 </p>
               </div>
-              <div className="w-full pt-5">
-                <button className="btn-primary w-full bg-black text-white rounded-md py-1">
+              <NavLink className="w-full pt-5">
+                <button
+                  onClick={modalFunc}
+                  className="btn-primary  w-full bg-black text-white rounded-md py-1"
+                >
                   <span className="font-semibold text-base leading-8 ">
-                    Continue to Payment
+                    Checkout
                   </span>
                 </button>
-              </div>
+              </NavLink>
+
+              {isOpen ? <CheckoutModal /> : ''}
             </div>
           </div>
         </div>

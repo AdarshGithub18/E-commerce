@@ -24,10 +24,12 @@ const Service = () => {
           {services.map((item, index) => (
             <div
               key={index}
-              className="py-3 px-5 rounded-xl border border-gray-700 text-center flex flex-col items-center gap-4 w-44 md:w-56"
+              className="py-3 px-5 rounded-xl border border-gray-300 text-center flex flex-col items-center gap-4 w-36 sm:w-40 md:w-44 lg:w-56 bg-white shadow-sm transition-transform transform hover:scale-105"
             >
-              <img src={item.icon} width={60} alt={item.title} />
-              <p>{item.title}</p>
+              <img src={item.icon} className="w-16 h-16" alt={item.title} />
+              <p className="text-sm md:text-base font-medium text-gray-700">
+                {item.title}
+              </p>
             </div>
           ))}
         </div>

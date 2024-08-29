@@ -2,9 +2,8 @@ import SelectCategory from '../../components/allproducts/SelectCategory';
 import ProductCard from '../../components/allproducts/ProductCard';
 import ProductsCard from '../../components/allproducts/ProductsCard';
 import SearchBar from '../../components/allproducts/SearchBar';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { ProductFetchingContext } from '../../contexts/ProductFetchingContext';
-import PaginationComp from '../../components/allproducts/PaginationComp';
 import LoadingCard from '../../components/loading-card/Loadingcard';
 
 const AllProducts = () => {
@@ -12,11 +11,13 @@ const AllProducts = () => {
     ProductFetchingContext
   );
 
+  useEffect(() => {
+    document.title = 'All Products | UrbanCart';
+  }, []);
+
   return (
     <section>
       <div className="rounded-md bg-gray-50 py-3 m-5">
-        <SearchBar />
-
         <SelectCategory />
       </div>
 
@@ -36,14 +37,6 @@ const AllProducts = () => {
             );
           })}
         </div>
-      )}
-
-      {!showCategoryProduct ? (
-        <div className="flex justify-center my-10">
-          <PaginationComp />
-        </div>
-      ) : (
-        ''
       )}
     </section>
   );

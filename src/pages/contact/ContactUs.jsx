@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 
 const ContactUs = () => {
+  useEffect(() => {
+    document.title = 'Contact Us | UrbanCart';
+  }, []);
   return (
     <section className="text-gray-600  relative">
       <div className="container px-5 py-24 mx-auto">

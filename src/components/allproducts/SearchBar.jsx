@@ -3,16 +3,13 @@ import { ProductFetchingContext } from '../../contexts/ProductFetchingContext';
 import { CiSearch } from 'react-icons/ci';
 
 const SearchBar = () => {
-  const { handleSearch, searchProduct } = useContext(ProductFetchingContext);
   return (
     <>
-      <div className="flex rounded-md border-2 border-black overflow-hidden  max-w-md mx-auto ">
+      <div className="flex w-[600px] rounded-md border-2  overflow-hidden  max-w-md mx-auto ">
         <input
-          type="email"
-          value={searchProduct}
-          onChange={handleSearch}
+          type="text"
           placeholder="Mobile , Laptop , Meckup , Groceries "
-          className=" outline-none w-full bg-white text-gray-600 text-sm px-4 py-3"
+          className=" w-[600px] outline-none  bg-white text-gray-600 text-sm px-4 py-3"
         />
         <button
           type="button"
