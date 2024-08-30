@@ -9,6 +9,8 @@ export const ProductProvider = ({ children }) => {
 
   const [selectedCategory, setSelectedCategory] = useState('');
   const [showCategoryProduct, setShowCategoryProduct] = useState(false);
+  const [searchProduct, setSearchProduct] = useState('');
+  const [searchFilteredProduct, setSearchFilteredProduct] = useState([]);
 
   //changing the page title
 
@@ -71,6 +73,16 @@ export const ProductProvider = ({ children }) => {
 
   // handle search
 
+  // handle search filter
+
+  const handleSearch = () => {
+    const filter = allProduct.filter((item) => {
+      return item.category.toLowerCase().includes(searchProduct.toLowerCase());
+    });
+    setSearchFilteredProduct(filter);
+    console.log(filter);
+  };
+
   const allValues = {
     categories,
     setCategories,
@@ -83,6 +95,10 @@ export const ProductProvider = ({ children }) => {
     showCategoryProduct,
     setShowCategoryProduct,
     handleFilter,
+    setSearchProduct,
+    handleSearch,
+    searchProduct,
+    searchFilteredProduct,
   };
 
   return (

@@ -4,7 +4,7 @@ import { FaArrowLeftLong } from 'react-icons/fa6';
 const LoadingSingleProduct = () => {
   return (
     <section className="text-gray-600 body-font overflow-hidden flex justify-center items-center animate-pulse">
-      <div className="container px-5 my-12 md:py-24 mx-auto">
+      <div className="container px-5 my-12 md:py-10 mx-auto">
         <button className="flex items-center gap-1 bg-gray-50 rounded-md px-2 py-1">
           <span>
             <FaArrowLeftLong />

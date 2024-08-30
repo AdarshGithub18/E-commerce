@@ -21,12 +21,18 @@ const Navbar = () => {
   const handleMenu = () => {
     setToggleMenu(!toggleMenu);
   };
+
+  const navLinkStyles = ({ isActive }) => {
+    return {
+      textDecoration: isActive ? 'underline' : 'none',
+    };
+  };
   return (
     <>
       <nav className="bg-white shadow-sm z-10 p-4 flex flex-col md:flex-row md:gap-7 w-full sticky top-0">
         <div className="nav-content flex flex-row gap-8 md:mx-6 items-center justify-between w-full">
           <div className="nav-logo z-10 flex">
-            <NavLink to={'/'} className="font-bold text-xl">
+            <NavLink to={'/'} className="font-bold text-xl ">
               UrbanCart{' '}
             </NavLink>
           </div>
@@ -36,7 +42,11 @@ const Navbar = () => {
             {navLinks.map((link, id) => {
               return (
                 <>
-                  <NavLink className={'font-semibold'} to={link.path}>
+                  <NavLink
+                    style={navLinkStyles}
+                    className={'font-medium'}
+                    to={link.path}
+                  >
                     {link.title}
                   </NavLink>
                 </>
@@ -46,7 +56,7 @@ const Navbar = () => {
 
           <div className="flex justify-end gap-6">
             <NavLink to={'/login'}>
-              <button className="flex items-center gap-2 p-1 border border-black text-black md:px-2 md:py-1 rounded">
+              <button className="flex items-center gap-2 p-1  text-black md:px-2 md:py-1 rounded">
                 <span className="text-xl">
                   <LuUserCircle2 />
                 </span>
@@ -98,7 +108,7 @@ const Navbar = () => {
                   <>
                     <NavLink
                       onClick={handleMenu}
-                      className={'font-semibold'}
+                      className={'font-medium'}
                       key={id}
                       to={link.path}
                     >

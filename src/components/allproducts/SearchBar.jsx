@@ -1,25 +1,53 @@
 import React, { useContext } from 'react';
 import { ProductFetchingContext } from '../../contexts/ProductFetchingContext';
-import { CiSearch } from 'react-icons/ci';
 
 const SearchBar = () => {
+  const { setSearchProduct, searchProduct, handleSearch } = useContext(
+    ProductFetchingContext
+  );
+
+  const handleChange = (e) => {
+    setSearchProduct(e.target.value);
+  };
   return (
     <>
-      <div className="flex w-[600px] rounded-md border-2  overflow-hidden  max-w-md mx-auto ">
-        <input
-          type="text"
-          placeholder="Mobile , Laptop , Meckup , Groceries "
-          className=" w-[600px] outline-none  bg-white text-gray-600 text-sm px-4 py-3"
-        />
+      <form
+        onSubmit={(e) => e.preventDefault()}
+        className="flex items-center max-w-lg mx-auto"
+      >
+        <div className="relative w-full">
+          <input
+            type="text"
+            onChange={handleChange}
+            value={searchProduct}
+            className=" border border-gray-300 text-gray-900 text-sm rounded-lg outline-none block w-full ps-4 p-2.5  "
+            placeholder="Search smartphones, fashion, and groceries..."
+            required
+          />
+        </div>
         <button
-          type="button"
-          className="flex items-center justify-center bg-black px-5"
+          type="submit"
+          onClick={handleSearch}
+          className="inline-flex items-center py-2.5 px-3 ms-2 text-sm font-medium text-white bg-black rounded-lg border"
         >
-          <span className="text-white text-xl font-bold">
-            <CiSearch />
-          </span>
+          <svg
+            className="w-4 h-4 me-2"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 20 20"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+            />
+          </svg>
+          Search
         </button>
-      </div>
+      </form>
     </>
   );
 };

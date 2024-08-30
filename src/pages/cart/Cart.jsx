@@ -19,10 +19,15 @@ const Cart = () => {
     handleTotalCost,
     handleRemoveItem,
     isOpen,
+    successPromo,
   } = useContext(CartContext);
   //changing the page title
   useEffect(() => {
     document.title = 'Shopping Cart | UrbanCart';
+  }, []);
+
+  useEffect(() => {
+    window.scrollTo(0, 0); // Scroll to the top of the page
   }, []);
 
   const navigate = useNavigate();
@@ -181,6 +186,7 @@ const Cart = () => {
                     />
 
                     <p className="text-red-600  my-1">{invalidPromo}</p>
+                    <p className="text-green-500 my-1"> {successPromo}</p>
 
                     <button
                       onClick={handleDiscount}
@@ -203,7 +209,7 @@ const Cart = () => {
                   ${cart.length == 0 ? 0 : Math.floor(handleTotalCost())}
                 </p>
               </div>
-              <NavLink className="w-full pt-5">
+              <div className="w-full pt-5">
                 <button
                   onClick={modalFunc}
                   className="btn-primary  w-full bg-black text-white rounded-md py-1"
@@ -212,9 +218,9 @@ const Cart = () => {
                     Checkout
                   </span>
                 </button>
-              </NavLink>
+              </div>
 
-              {isOpen ? <CheckoutModal /> : ''}
+              {isOpen && cart.length >= 1 ? <CheckoutModal /> : ''}
             </div>
           </div>
         </div>

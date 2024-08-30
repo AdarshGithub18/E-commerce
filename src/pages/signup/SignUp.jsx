@@ -16,6 +16,10 @@ const SignUp = () => {
     document.title = 'SignUp | UrbanCart';
   }, []);
 
+  useEffect(() => {
+    window.scrollTo(0, 0); // Scroll to the top of the page
+  }, []);
+
   // navigation
 
   const navigate = useNavigate();

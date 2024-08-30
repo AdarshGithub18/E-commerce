@@ -39,11 +39,15 @@ const SingleProduct = () => {
     }
   }, [singleProduct.title]);
 
+  useEffect(() => {
+    window.scrollTo(0, 0); // Scroll to the top of the page
+  }, []);
+
   return loading ? (
     <LoadingSingleProduct />
   ) : (
     <section className="text-gray-600 body-font overflow-hidden flex justify-center items-center">
-      <div className="container px-5 my-12 md:py-24 mx-auto">
+      <div className="container px-5 my-12 md:py-10 mx-auto">
         <button
           onClick={() => navigateAllProducts('/all-products')}
           className="flex items-center gap-1 bg-gray-50 rounded-md px-2 mb-3 py-1"

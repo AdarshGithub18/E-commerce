@@ -1,15 +1,11 @@
 import React, { useContext } from 'react';
 import { CartContext } from '../../contexts/CartContext';
-import gpay from '../../assets/gpay.png';
+
 const CheckoutModal = () => {
-  const { isOpen, modalFunc } = useContext(CartContext);
+  const { isOpen, modalFunc, handleTotalCost } = useContext(CartContext);
 
   // Close the modal when the Escape key is pressed
-  const handleKeyDown = (e) => {
-    if (e.key === 'Escape') {
-      modalFunc();
-    }
-  };
+  const taxValue = 18; //dummy value
 
   return (
     isOpen && (
@@ -18,7 +14,6 @@ const CheckoutModal = () => {
         tabIndex="-1"
         className="bg-black/50 fixed inset-0 z-50 flex items-center  justify-center overflow-y-auto" // This allows the entire modal to scroll
         onClick={modalFunc}
-        onKeyDown={handleKeyDown}
         role="dialog"
         aria-modal="true"
       >
@@ -57,16 +52,16 @@ const CheckoutModal = () => {
             <div className="bg-gray-100 rounded-md flex justify-between gap-2 flex-col py-4 p-2 md:px-10">
               <h1 className="text-xl font-semibold">Order Summary</h1>
               <p className="flex justify-between">
-                Original Price :<span>$1200</span>
+                Original Price :<span>${Math.floor(handleTotalCost())}</span>
               </p>
+
               <p className="flex justify-between">
-                Savings :<span className="text-green-500">$1200</span>
-              </p>
-              <p className="flex justify-between">
-                Tax :<span>$1200</span>
+                Tax :<span>${taxValue}</span>
               </p>
               <hr />
-              <h1 className="text-rounded-md font-semibold">Total : $30000</h1>
+              <h1 className="text-rounded-md font-semibold">
+                Total : ${Math.floor(handleTotalCost() + taxValue)}
+              </h1>
             </div>
 
             <div className="mt-4">
@@ -111,7 +106,7 @@ const CheckoutModal = () => {
                   autoComplete="off"
                   required
                   className="block w-full rounded-md border border-gray-300 px-3 py-2  outline-none "
-                  placeholder="12345667785"
+                  placeholder="+9189234XXXXX"
                 />
               </div>
               <div>

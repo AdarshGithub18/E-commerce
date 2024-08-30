@@ -19,7 +19,7 @@ const ProductCard = () => {
               <>
                 <div
                   key={item.id}
-                  className="relative  mx-auto  flex w-[180px]  h-[280px] md:w-full md:h-full flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md "
+                  className=" relative mx-auto flex w-full max-w-xs md:max-w-sm lg:max-w-md h-auto flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md "
                 >
                   <NavLink
                     to={`/single-product/${item.id}`}

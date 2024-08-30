@@ -4,6 +4,10 @@ const ContactUs = () => {
   useEffect(() => {
     document.title = 'Contact Us | UrbanCart';
   }, []);
+
+  useEffect(() => {
+    window.scrollTo(0, 0); // Scroll to the top of the page
+  }, []);
   return (
     <section className="text-gray-600  relative">
       <div className="container px-5 py-24 mx-auto">
@@ -12,9 +16,9 @@ const ContactUs = () => {
             Contact Us
           </h1>
           <p className="lg:w-2/3 mx-auto leading-relaxed text-base">
-            Have questions or need help with your order? Get in touch with
-            us—we're here to make your shopping experience seamless and
-            enjoyable!
+            We would love to hear from you! Whether you have a question about
+            our products, pricing, or anything else, our team is ready to answer
+            all your questions.
           </p>
         </div>
 
@@ -32,7 +36,7 @@ const ContactUs = () => {
                   type="text"
                   id="name"
                   name="name"
-                  className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-gray-500 focus:bg-white focus:ring-2 focus:ring-gray-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                  className="w-full border-gray-300 bg-opacity-50 rounded border  text-base outline-none text-gray-700 py-1 px-3 "
                 />
               </div>
             </div>
@@ -48,7 +52,7 @@ const ContactUs = () => {
                   type="email"
                   id="email"
                   name="email"
-                  className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-gray-500 focus:bg-white focus:ring-2 focus:ring-gray-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                  className="w-full rounded border border-gray-300  text-base outline-none text-gray-700 py-1 px-3 "
                 />
               </div>
             </div>
@@ -63,21 +67,21 @@ const ContactUs = () => {
                 <textarea
                   id="message"
                   name="message"
-                  className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-gray-500 focus:bg-white focus:ring-2 focus:ring-gray-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
+                  className="w-full  rounded border border-gray-300 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none"
                 ></textarea>
               </div>
             </div>
+
             <div className="p-2 w-full">
-              <button className="flex mx-auto text-white bg-black border-0 py-2 px-8 focus:outline-none hover:bg-gray-700 rounded text-lg">
-                Button
+              <button className="flex mx-auto text-white bg-black border-0 py-1 px-5 focus:outline-none hover:bg-gray-700 rounded text-lg">
+                Send Message
               </button>
             </div>
             <div className="p-2 w-full pt-8 mt-8 border-t border-gray-200 text-center">
-              <a className="text-gray-800">urbancart@email.com</a>
+              <a className="text-gray-800"> info@urbancart.com</a>
               <p className="leading-normal my-5">
-                Andheri West
+                123 UrbanCart Street, Suite 456, Los Angeles, California, 90001
                 <br />
-                Mumbai, 400053
               </p>
             </div>
           </div>
